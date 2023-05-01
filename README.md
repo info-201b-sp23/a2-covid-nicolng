@@ -31,7 +31,7 @@ Guess: Which state do you think has the highest number of COVID cases, and which
 Did the number of COVID cases and deaths surprise you? Why or why not? What about the states with the highest and lowest number of cases? How did your guesses line up with the actual results? Answer in at least 1-3 sentences
 
     The total number of cases is 102070172 and the total number of deaths is 1115001 did suprise me since I thought covid was a lot more more severe than it.
-    I'm not suprised that California has the highest number of case because it is the most populated state and the lowest cases Northern Mariana Island doesn't suprise me either because I've never heard of it.
+    I'm not suprised that California has the highest number of case because it is the most populated state and the lowest cases American Samoa doesn't suprise me either because I've never heard of it.
 
 ## Reflection 3
 Which county has the highest number of cases in the state of Washington, and does it surprise you? Why or why not? (You may need to google this county to learn about it) Answer at least in 1-3 sentences

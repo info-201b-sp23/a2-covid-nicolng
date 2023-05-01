@@ -90,17 +90,15 @@ num_highest_state <- states %>%
 # `state_highest_ratio`
 state_highest_ratio <- states %>% 
   filter(date == max(date)) %>%
-  group_by(state) %>%
-  summarise(ratio = (sum(deaths)/sum(cases))) %>% 
+  mutate(ratio = deaths/cases) %>% 
   filter(ratio == max(ratio)) %>% 
   pull(state)
 
 # 2.f Which state has had the fewest number of cases as of the most
 # recent date? Make sure to pull() this value `state_lowest_cases`
 state_lowest_cases <- states %>% 
-  group_by(state) %>% 
-  summarise(ratio = (sum(deaths)/sum(cases))) %>%
-  filter(ratio == min(ratio)) %>% 
+  filter(date == max(date)) %>%
+  filter(cases == min(cases)) %>% 
   pull(state)
 
 # Reflection 2 (answer in the README.md file)
@@ -152,7 +150,8 @@ national <- national %>%
 # Add  a new column to the `national` data frame called `new_deaths` that has
 # the number of *new* deaths each day.
 # HINT: The dyplr lag() function will be very helpful here.
-national <- national %>% mutate(new_deaths = deaths - lag(deaths))
+national <- national %>% 
+  mutate(new_deaths = deaths - lag(deaths))
 
 
 # 2.m What was the date when the most new cases in the U.S. occurred? Make sure
@@ -172,7 +171,7 @@ date_most_deaths <- national %>%
 # to pull() this value `most_deaths`
 most_deaths <- national %>% 
   filter(new_deaths == max(new_deaths, na.rm = TRUE)) %>% 
-  pull(deaths)
+  pull(new_deaths)
 
 
 # You can plot this data with built-in plot functions
@@ -190,8 +189,10 @@ plot(national$new_deaths)
 counties$date <- as.Date(counties$date)
 highest_cases_in_each_state <- counties %>% 
   group_by(state) %>% 
-  filter(date == max(date) & cases == max(cases)) %>%
+  filter(cases == max(cases)) %>%
+  filter(date == max(date)) %>%
   select(state, county, cases)
+
 
 # Reflection 3 (answer in README.md file)
 # Inspect the `highest_cases_in_each_state` dataframe
@@ -238,6 +239,7 @@ total_cases_counties <- counties %>%
   group_by(date) %>%
   summarise(county_total_cases = sum(cases))
 
+
 # 4.b Join `total_cases_counties` with the `national` dataframe.
 # Save this dataframe as `all_totals`.
 national$date <- as.Date(national$date)
@@ -261,19 +263,22 @@ num_national_county_diff <- nrow(national_county_diff)
 # 5. You Turn!
 #-------------------------------------------------
 
-  # 5.a Now it's your turn to ask your own question! Come up with a new question
-  # about this COVID data, and then write code to answer it (at least 2-3 lines)
+# 5.a Now it's your turn to ask your own question! Come up with a new question
+# about this COVID data, and then write code to answer it (at least 2-3 lines)
 
-  # QUESTION:  Write your question in English language words here
-  # Which make a dataframe that arranges the most recent date's deaths from greatest to least? 
+# QUESTION:  Write your question in English language words here
 
-  #  Write code (at least 2-3 lines) that will answer your question
-  
-deaths_ordered <- states %>% 
+# Make a dataframe that arranges the most recent date's deaths from greatest to least?
+# Is there a pattern with population of a state?
+
+#  Write code (at least 2-3 lines) that will answer your question
+
+second_most <- states %>% 
   filter(date == max(date)) %>%
   group_by(state) %>%
   arrange(-deaths)
 
+View(second_most)
 # Reflection 6 (answer in README.md file)
 # Why were you interested in this particular question? Were you able to answer
 # your question with code? What did you learn?
